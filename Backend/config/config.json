@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "Azerty123",
+    "database": "groupomania",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "admin",
+    "password": "Azerty123",
+    "database": "groupomania",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "admin",
+    "password": "Azerty123",
+    "database": "groupomania",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
