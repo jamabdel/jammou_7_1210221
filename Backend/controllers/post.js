@@ -1,5 +1,7 @@
-const db = require("../models");
+const db = require("../models/ndex");
 const Post = db.post;
+const fs = require('fs')
+//const { post } = db.sequelize.models
 
 // Création d'un post
 exports.createPost = (req, res, next) => {

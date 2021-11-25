@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt'); //Bcrypt sert à Hash (et donc sécuriser) les
 
 const jwt = require('jsonwebtoken'); //jsonwebtoken genère un token (pour que nos users ne se connectent qu'une fois) Créer et vérifier les tokens d'authentification
 
-const db = require('../models/index'); //on importe le schéma pour nos utilisateurs.
+const db = require('../models/fndex'); //on importe le schéma pour nos utilisateurs.
 
 const User = db.User;
 //const CryptoJS = require("crypto-js");

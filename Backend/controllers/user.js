@@ -1,11 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../models");
+const db = require("../models/ndex");
+const { User } = db.sequelize.models
 
 //const { secret } = require("../config.json");
 //const { oldEmployesPassword } = require("../config.json");
 
-const User = db.User;
+//const User = db.User;
 const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
 
 //Création d'un utilisateur
