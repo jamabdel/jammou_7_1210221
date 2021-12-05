@@ -1,4 +1,4 @@
-const db = require("../models/ndex");
+const db = require("../models/connexion");
 const Post = db.post;
 const fs = require('fs')
 //const { post } = db.sequelize.models

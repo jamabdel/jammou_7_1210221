@@ -12,8 +12,8 @@ const postCtrl = require('../controllers/post');
 router.post('/', auth, multer, postCtrl.createPost); //On ajoute multer ici également, pour gêrer les modifications d'images.
 
 //Récupérer toutes les sauces
-router.get('/', auth, postCtrl.getAllUsersPosts);
-
+router.get('/users/:id', auth, postCtrl.getAllUsersPosts);
+router.get("/", auth, postCtrl.getAllPosts);
 //Récupérer toutes une sauces
 router.get('/:id', auth, postCtrl.getOnePost);
 

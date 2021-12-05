@@ -1,82 +1,84 @@
 <template>
   <b-container>
-    <b-row align-h="center">
+     <div class="card">
+    <b-row  align-h="center">
       <b-col lg="8">
-        <h1 align="center" class="mb-4">Mon profil</h1>
+        <h1 align="center" class="mb-4">Configurez votre profil<br>Votre profil permet aux autres de savoir qui vous êtes</h1>
         <b-row>
           <b-col cols="12" offset-sm="1" sm="10" offset-md="2" md="8" offset-lg="2" lg="8">
-            <b-card class="card">
+
+            <div class="card">
               <!--Gestion de l'image-->
               <div align="center" class="mb-3">
                 <div
                   class="base-image-input"
                   v-b-tooltip.hover
-                  title="Modifier la photo de profil"
+                  title="Choisissez une image de profil"
                   :style="{ 'background-image': `url(${imageData})` }"
-                  @click="chooseImage"
+                  @click="getImage"
                   alt="User image"
                 >
                   <span v-if="!imageData" class="placeholder"></span>
-                  <input class="file-input" ref="fileInput" type="file" @input="onSelectFile" />
+                  <input class="file-input" ref="fileInput" type="file" @input="selectImage" />
                 </div>
               </div>
 
               <!--Formulaire-->
               <div align="center">
-                <label for="pseudo">Pseudo</label>
+                <label for="pseudo"> Modifier mon Pseudo</label>
                 <b-form-input
-                  id="input-1"
+                  
                   class="mb-3 input"
                   v-model="user.pseudo"
                   placeholder="Mon pseudo"
                   maxlength="10"
-                  @input="lenghtCheck(10, user.pseudo, 'pseudo')"
+                  
                 ></b-form-input>
-                <label for="email-adress">Adresse email</label>
+                <label for="email-adress">Modifier mon adresse email</label>
                 <b-form-input
-                  id="input-2"
-                  class="mb-3 input"
+                  
+                  class="mb-2 input"
                   v-model="user.email"
                   type="email"
                   placeholder="Mon adresse email"
                   maxlength="30"
-                  @input="lenghtCheck(30, user.email, 'email')"
+                 
                 ></b-form-input>
               </div>
               <div align="center">
-                <b-button
-                  v-show="displayModifyPassword"
-                  @click="switchDisplayModifyPassword"
-                  pill
-                  size="sm"
-                  class="modify-password mt-2"
-                >Modifier mon mot de passe</b-button>
+              
               </div>
-              <div align="center" v-show="!displayModifyPassword">
-                <label for="password">Mot de passe</label>
+              <div align="center">
+                <label for="password">Modifier mon mot de passe</label>
                 <b-form-input
                   class="input"
-                  id="input-3"
+                 
                   v-model="password"
                   type="password"
                   placeholder="Nouveau mot de passe"
                   maxlength="16"
-                  @input="lenghtCheck(16, password, 'mot de passe')"
+                  
                 ></b-form-input>
               </div>
-            </b-card>
-            <p class="error-message font-weight-bold text-center mt-2">{{ error }}</p>
+            </div>
+
+
+            <p class="messageError font-weight-bold text-center mt-2">{{ error }}</p>
           </b-col>
         </b-row>
         <b-row class="mt-4" align="center">
           <b-col offset="1" cols="5" offset-sm="3" sm="3" offset-md="3" md="3" offset-lg="3" lg="3">
             <div>
-              <b-button pill @click="cancelModification" class="ml-3 reset-button">Annuler</b-button>
+
+
+
+              <b-button pill @click="profile" class="send-button">forum</b-button>
+              
             </div>
           </b-col>
           <b-col cols="5" sm="3" md="3" lg="3">
             <div>
-              <b-button pill @click="modifyUser" class="send-button">Modifier</b-button>
+              <b-button pill @click="updateUser" class="send-button">Modifier</b-button>
             </div>
           </b-col>
         </b-row>
@@ -86,7 +88,7 @@
               <b-button
                 pill
                 size="sm"
-                class="mb-3 delete-button"
+                class="send-button"
                 @click="deleteUser"
               >Supprimer mon profil</b-button>
             </div>
@@ -94,40 +96,41 @@
         </b-row>
       </b-col>
     </b-row>
+    </div>
   </b-container>
+  
 </template>
  
 <script>
-import Axios from 'axios';
-import { url } from "../main";
+
 
 export default {
   name: "Profile",
   data() {
     return {
-      displayModifyPassword: true,
-      imageData: "",
-      password: "",
-      user: {},
-      uri: "users/" + this.userId,
-      file: "",
-      error: "",
-      pseudoRegex: /^[a-zA-Z0-9]{3,}$/,
-      emailRegex: /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-      passwordRegex: /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/,
       headers: {
         headers: {
           Authorization: this.token,
           userId: this.userId,
         },
       },
+      pseudoRegex: /^[a-zA-Z0-9]{3,}$/,
+      emailRegex: /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+      passwordRegex: /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/,
+      updatedPassword: true,
+      imageData: "",
+      password: "",
+      user: {},
+      uri: "users/" + this.userId,
+      file: "",
+      error: "",
     };
   },
   props: {
     userId: {
       type: String,
     },
-    displayProfile: {
+    showProfile: {
       type: Boolean,
     },
     token: {
@@ -144,35 +147,19 @@ export default {
         }, 3000);
     }
   },
-  computed: {
-    body() {
-      if (this.password === "" || this.password === null) {
-        return {
-          pseudo: this.user.pseudo,
-          email: this.user.email,
-        };
-      } else {
-        return {
-          pseudo: this.user.pseudo,
-          email: this.user.email,
-          password: this.password,
-        };
-      }
-    },
-  },
   
   methods: {
-    lenghtCheck(length, object, message) {
-      if (object.length === length) {
-        this.error = "Votre " + message + " est trop long";
-      } else {
-        this.error = "";
-      }
+  
+    getUser() {
+      this.$http.get('http://localhost:3000/api/users/' + this.userId, this.headers).then((res) => {
+        this.user = res.data;
+        this.imageData = res.data.profilePicture;
+      });
     },
-    chooseImage() {
+    getImage() {
       this.$refs.fileInput.click();
     },
-    onSelectFile() {
+    selectImage() {
       const input = this.$refs.fileInput;
       const files = input.files;
       if (files && files[0]) {
@@ -184,83 +171,101 @@ export default {
         this.file = this.$refs.fileInput.files[0];
       }
     },
-    switchDisplayProfile() {
-      //dès que clic sur modifier ou anuler retour au forum
-      let emitDisplayProfile = !this.displayProfile;
-      this.$emit("display-profile", emitDisplayProfile);
+    profile() {
+      //dès que clic sur modifier ou anuler retour auforum
+      let emitshowProfile = !this.showProfile;
+      this.$emit("showProfile", emitshowProfile);
     },
-    switchDisplayModifyPassword() {
-      this.displayModifyPassword = !this.displayModifyPassword;
+    switchUpdatedPassword() {
+      this.updatedPassword = !this.updatedPassword;
     },
-    getUser() {
-      this.$http.get(url + "users/" + this.userId, this.headers).then((res) => {
-        this.user = res.data;
-        this.imageData = res.data.profilePicture;
-      });
-    },
-    modifyUser() {
+    updateUser() {
       if (!this.emailRegex.test(this.body.email)) {
         return (this.error = "Vous devez renseigner une adresse email valide");
       } else if (!this.pseudoRegex.test(this.body.pseudo)) {
         return (this.error =
           "Votre pseudo doit contenir au moins 3 caractères");
       } else if (this.body.password) {
-          if (!this.passwordRegex.test(this.password)){
-            return (this.error =
+        if (!this.passwordRegex.test(this.password)){
+          return (this.error =
           "Votre mot de passe doit contenir au moins 8 caractères et au moins 1 lettre et 1 chiffre");
         }
       }
         
       let formData = new FormData();
-      formData.append("image", this.file);
       formData.append("pseudo", this.body.pseudo);
       formData.append("email", this.body.email);
       formData.append("user_id", this.userId);
+      formData.append("image", this.file);
       if (this.body.password) {
         formData.append("password", this.body.password);
       }
-      Axios.put(url + this.uri, formData, this.headers)
+      this.$http.put('http://localhost:3000/api/' + this.uri, formData, this.headers)
         .then(() => {
           this.$parent.getPosts();
-          this.switchDisplayProfile();
+          this.profile();
           this.$refs.fileInput.value = "";
         })
         .catch(() => {
           this.error = "Un problème est survenu, veuillez réessayer";
         });
     },
-    cancelModification() {
+
+    deleteChanges() {
       this.getUser();
       this.password = "";
-      this.displayModifyPassword = true;
+      this.updatedPassword = true;
       this.imageData = this.user.profilePicture;
     },
+    
     deleteUser() {
-      let deleteConfirm = confirm(
+      let ConfirmBeforeDelete = confirm(
         //apparition de la fenêtre
         "Attention. Toutes vos données seront supprimées. Cette action est irréversible."
       );
-      if (deleteConfirm) {
-        this.$http.delete(url + this.uri, this.headers)
+      if (ConfirmBeforeDelete) {
+        this.$http.delete('http://localhost:3000/api/' + this.uri, this.headers)
           .then(() => {
-            this.logout();
+            this. Exit ();
           })
           .catch(() => {
             this.error = "Un problème est survenu, veuillez réessayer";
           });
       }
     },
-    logout() {
+     Exit () {
       localStorage.clear();
       this.$router.push("/login");
     },
   },
+  getPosts() {
+      //utilisée pour charger les posts et pour recharger le composant
+      this.$http.get('http://localhost:3000/api/posts', this.headers).then((res) => {
+        this.posts = res.data;
+      });
+    },
+      computed: {
+        body() {
+          if (this.password === "" || this.password === null) {
+            return {
+              pseudo: this.user.pseudo,
+              email: this.user.email,
+            };
+          } else {
+            return {
+              pseudo: this.user.pseudo,
+              email: this.user.email,
+              password: this.password,
+            };
+          }
+        },
+      },
 };
 </script>
 
 <style scoped>
 .identification-box {
-  background-color: #ffd7d7;
+  background-color: #3b2cc2;
 }
 .modify-password {
   background-color: white;
@@ -268,34 +273,34 @@ export default {
   color: black;
 }
 .modify-password:hover {
-  border: solid 1px #fd2d01;
+  border: solid 1px black1;
 }
 .send-button {
-  background-color: #ffd7d7;
-  color: black;
-  border: solid 1px #fd2d01;
+  background-color: #3b2cc2;
+  color: white;
+  border: solid 1px black;
 }
 .send-button:hover {
-  background-color: #ffb3b3;
+  background-color: #3b2cc2;
 }
 .reset-button {
   background-color: transparent;
-  border: solid 1px #ffb3b3;
+  border: solid 1px #3b2cc2;
   color: #e42701;
 }
 .reset-button:hover {
   background: #ffe4e4;
-  color: #fd2d01;
+  color: black1;
 }
 .delete-button {
   background-color: transparent;
-  border: solid 1px #ffb3b3;
+  border: solid 1px #3b2cc2;
   color:  #e42701;
 }
 .delete-button:hover {
   background: #ffe4e4;
 }
-.error-message {
+.messageError {
   color: #fd2d01;
 }
 .base-image-input {
@@ -312,7 +317,7 @@ export default {
   opacity: 0.5;
 }
 .placeholder {
-  background: #ffd7d7;
+  background: #3b2cc2;
   width: 100%;
   height: 100%;
   display: flex;
@@ -321,22 +326,22 @@ export default {
   color: black;
   font-size: 1em;
   text-align: center;
-  border: solid 1px #fd2d01;
+  border: solid 1px #fd2d#28a74501;
   border-radius: 50%;
 }
 .placeholder:hover {
-  background: #ffb3b3;
+  background: #3b2cc2;
 }
 .file-input {
   display: none;
 }
 .input {
-  width: 20em;
+  width: 17em;
 }
 .input:hover {
   outline: none !important;
-  border: solid 1px #fd2d01;
-  box-shadow: 0 0 10px #ffd7d7;
+  border: solid 1px #28a745;
+  box-shadow: 0 0 10px #17a2b8;
 }
 @media screen and (max-width: 870px) {
   h1 {

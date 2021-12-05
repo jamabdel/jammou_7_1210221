@@ -1,4 +1,4 @@
-import { User } from "../models/connexion";
+/*import { User } from "../models/connexion";
 import { hash as _hash } from "bcrypt";
 // Fonction qui crée le compte admin dans la base de données à la connexion s'il n'existe pas
 function setAdmin(req, res) {
@@ -35,3 +35,4 @@ function setAdmin(req, res) {
     });
 }
 export default setAdmin();
+*/

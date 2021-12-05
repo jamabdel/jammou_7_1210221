@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../models/ndex");
-const { User } = db.sequelize.models
+const db = require("../models/connexion");
 
+const User = db.user;
 //const { secret } = require("../config.json");
 //const { oldEmployesPassword } = require("../config.json");
 
@@ -94,7 +94,7 @@ exports.getOneUser = (req, res, next) => {
 };
 
 //Modification d'un utilisateur
-exports.modifyUser = (req, res, next) => {
+exports.updateUser = (req, res, next) => {
   let password;
   if (req.body.password) {
     bcrypt.hash(req.body.password, 10).then((hash) => {

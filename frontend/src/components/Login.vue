@@ -1,16 +1,18 @@
 <template>
+
   <div class="card">
+   
     <h1 class="card__title">Connexion</h1>
     <p class="card__subtitle">
       Tu n'as pas encore de compte ?
-      <router-link to="/Signup">S'inscrire</router-link>
+      <router-link to="/Signup"><i class="fas fa-sign-in-alt p-2"></i>S'inscrire</router-link>
     </p>
     <label for="email-adress">Adresse email *</label>
     <div class="form-row">
       <input
         v-model="email"
         class="form-row__input"
-        id="input-1"
+        
         type="email"
         required
         @keyup.enter="login"
@@ -20,7 +22,7 @@
     <label for="password">Mot de passe *</label>
     <div class="form-row">
       <input
-        id="input-2"
+       
         v-model="password"
         type="password"
         required
@@ -32,7 +34,7 @@
 
     <div class="form-row">
       <button pill class="button" type="submit" @click="login">
-        <span>Connexion</span>
+        <span><i class="fas fa-sign-in-alt p-4"></i>Connexion</span>
       </button>
     </div>
   </div>
@@ -40,7 +42,7 @@
 
 <script>
 import Axios from "axios";
-import { url } from "../main";
+
 
 export default {
   name: "Login",
@@ -59,10 +61,11 @@ export default {
         password: this.password,
       };
 
-      Axios.post(url + "users/login", user)
+      Axios.post("http://localhost:3000/api/users/login", user)
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem("currentUser", JSON.stringify(res.data));
+            localStorage.setItem("userLogin", JSON.stringify(res.data));
+            console.log(res);
             this.$router.push("/");
           }
         })
@@ -70,9 +73,9 @@ export default {
           localStorage.clear();
           if (err.response.status === 401) {
             this.error =
-              "Nous ne pouvons pas vous connecter. Vérifiez vos identifiants.";
+              "Connexion au serveur impossible.";
           } else {
-            this.error = "Un problème est survenu, veuillez réessayer";
+            this.error = "Vérifiez vos identifiants. ";
           }
         });
     },
@@ -104,7 +107,7 @@ export default {
   color: #aaaaaa;
 }
 .identification-box {
-  background-color: #ffd7d7;
+  background-color: #3b2cc2;
 }
 .icon-name {
   height: 250px;
@@ -116,23 +119,23 @@ h2 {
   font-size: 1.4em;
 }
 .submit-button {
-  background-color: #ffd7d7;
+  background-color: #3b2cc2;
   color: black;
-  border: solid 1px #fd2d01;
+  border: solid 1px black1;
 }
 .submit-button:hover {
-  background: #ffb3b3;
+  background: #3b2cc2;
 }
-.error-message {
-  color: #fd2d01;
+.messageError {
+  color: black1;
 }
 .input {
   width: 20em;
 }
 .input:hover {
   outline: none !important;
-  border: solid 1px #fd2d01;
-  box-shadow: 0 0 10px #ffd7d7;
+  border: solid 1px black1;
+  box-shadow: 0 0 10px #3b2cc2;
 }
 .switch-page {
   line-height: 50px;

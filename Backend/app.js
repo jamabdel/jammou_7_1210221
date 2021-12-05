@@ -18,7 +18,7 @@ require('dotenv').config(); //charger la variable d'environnement
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));*/
 //On créer notre application avec express
-const db = require("./models/index");
+const db = require("./models/connexion");
 db.sequelize.sync({ force: false })
   .then(() => {
   console.log("Synchronisation de la base de données");
